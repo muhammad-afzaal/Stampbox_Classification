@@ -1,1 +1,5 @@
 .idea
+/venv/
+/classification/migrations/
+/stampbox/environment.py
+/db.sqlite3
