@@ -53,10 +53,6 @@ def locate_text(param, flag=False):
 
 
 if __name__ == '__main__':
-    sample_text = "India has very rich and vivid culture\
-           widely spread from Kerala to Nagaland to Haryana to Maharashtra. " \
-                  "Delhi being capital with Mumbai financial capital.\
-                  Can be said better than some western cities such as " \
-                  " Munich, London etc. Pakistan and Bangladesh share its borders"
+    sample_text = ""
 
     locate_text(sample_text)
