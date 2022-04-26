@@ -10,12 +10,15 @@ from scrapy import Selector
 from selenium.webdriver.chrome.options import Options
 from classification.location_finder import locate_text
 
-s = Service(ChromeDriverManager().install())
+s = Service("/usr/bin/google-chrome")
+# s = Service(ChromeDriverManager().install())
 
-chrome_options = Options()
-chrome_options.add_argument("--disable-extensions")
-chrome_options.add_argument("--enable-javascript")
-chrome_options.headless = True
+# chrome_options = Options()
+# chrome_options.add_argument('--no-sandbox')
+# chrome_options.add_argument('--disable-dev-shm-usage')
+# chrome_options.add_argument("--disable-extensions")
+# chrome_options.add_argument("--enable-javascript")
+# chrome_options.headless = False
 
 # driver = webdriver.Chrome(options=chrome_options, service=s)
 #
@@ -30,6 +33,13 @@ chrome_options.headless = True
 
 def use_sel_model(img_param):
     try:
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.headless = True
+
+        # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
         driver = webdriver.Chrome(options=chrome_options, service=s)
 
         driver.get('https://images.google.com/')

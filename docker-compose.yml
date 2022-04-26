@@ -4,17 +4,17 @@ services:
   web:
     container_name: stampbox_classification
     build: .
-    command: daphne -b 0.0.0.0 -p 8000 stampbox.asgi:application
-#    command: python manage.py runserver 127.0.0.1:8000
+#    command: daphne -b 0.0.0.0 -p 8000 stampbox.asgi:application
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/backend
     ports:
-      - "3000:3000"
-  nginx:
-    image: nginx:latest
-    volumes:
-      - ./nginx/:/etc/nginx/conf.d/:ro
-    ports:
-      - '80:80'
-    depends_on:
-      - web
+      - "8000:8000"
+#  nginx:
+#    image: nginx:latest
+#    volumes:
+#      - ./nginx/:/etc/nginx/conf.d/:ro
+#    ports:
+#      - '80:80'
+#    depends_on:
+#      - web

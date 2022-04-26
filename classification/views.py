@@ -35,11 +35,11 @@ class ClassificationView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            logger.info(
-                f"REMOTE_HOST: {request.stream.META.get('REMOTE_HOST')} || REMOTE_ADDR: {request.stream.META.get('REMOTE_ADDR')}")
+            # logger.info(
+            #     f"REMOTE_HOST: {request.stream.META.get('REMOTE_HOST')} || REMOTE_ADDR: {request.stream.META.get('REMOTE_ADDR')}")
             logger.info(f"User-Agent: {request.headers.get('User-Agent')}")
             logger.info('[METHOD: POST] [ClassificationView] Predicting text from image')
-
+            print('DATA HERE: ', request.FILES)
             if request.data['media_file']:
                 serializer = self.serializer_class(data=request.data)
                 if serializer.is_valid():

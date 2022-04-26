@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import cv2
 from pylab import rcParams
 from IPython.display import Image
 import easyocr

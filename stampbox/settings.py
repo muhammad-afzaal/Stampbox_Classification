@@ -17,6 +17,16 @@ from stampbox.config import Config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = Config.environment(mode_selection='development')
+import nltk
+import spacy
+
+# essential entity models downloads
+nltk.downloader.download('maxent_ne_chunker')
+nltk.downloader.download('words')
+nltk.downloader.download('treebank')
+nltk.downloader.download('maxent_treebank_pos_tagger')
+nltk.downloader.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -183,7 +193,6 @@ MEDIA_URL = '/media/'
 
 # DEFAULT_FILE_STORAGE = 'stampbox.custom_storage.MediaStorage'
 FILE_UPLOAD_TEMP_DIR = BASE_DIR / 'File_Storage'
-
 
 # STATIC_URL = '/static/'
 # # STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
