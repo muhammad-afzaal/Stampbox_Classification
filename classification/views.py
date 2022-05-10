@@ -20,6 +20,33 @@ def remove_img(img_param):
         print('File not deleted', img_param)
 
 
+def sel_function(img):
+    text_list = use_sel_model(img)
+    if text_list:
+        repeat = False
+        status_code = status.HTTP_200_OK
+        response = {
+            'success': True,
+            'status_code': status_code,
+            'message': 'Image File added Successfully',
+            # 'data': serializer.data,
+            'extracted_details': text_list
+        }
+        remove_img(img)
+        return response, status_code, repeat
+
+    else:
+        repeat = True
+        status_code = status.HTTP_204_NO_CONTENT
+        response = {
+            'success': False,
+            'status_code': status_code,
+            'message': 'Unable to Apply OCR'
+        }
+        # remove_img(img)
+        return response, status_code, repeat
+
+
 class ClassificationView(APIView):
     permission_classes = (AllowAny,)
     serializer_class = image_Add_serializer
@@ -47,23 +74,23 @@ class ClassificationView(APIView):
                     logger.info(f"File uploaded successfully, as {serializer.data}")
                     img = serializer.data['media_file']
                     img = env['Base_Path'] + img
-                    # print('Relative Path', os.path.relpath(img))
-                    # apply_ocr(os.path.relpath(img))
-                    # text_list1 = apply_ocr(img)
+
                     text_list = use_sel_model(img)
-                    # text_list = text_list1.append(text_list2)
                     if text_list:
+                        # repeat = False
                         status_code = status.HTTP_200_OK
                         response = {
                             'success': True,
                             'status_code': status_code,
                             'message': 'Image File added Successfully',
-                            'data': serializer.data,
-                            'related_text': text_list
+                            # 'data': serializer.data,
+                            'extracted_details': text_list
                         }
                         remove_img(img)
                         return Response(response, status_code)
+
                     else:
+                        # repeat = True
                         status_code = status.HTTP_204_NO_CONTENT
                         response = {
                             'success': False,
@@ -73,21 +100,30 @@ class ClassificationView(APIView):
                         remove_img(img)
                         return Response(response, status_code)
 
+                    # # loop
+                    # # iteration 1
+                    # response, status_code, repeat = sel_function(img)
+                    # if repeat == True:
+                    #     response, status_code, repeat = sel_function(img)
+                    #     # iteration 2
+                    #     if repeat == True:
+                    #         response, status_code, repeat = sel_function(img)
+                    #         # iteration 3 final
+                    #         if repeat == True:
+                    #             remove_img(img)
+                    #             return Response(response, status_code)
+                    #         else:
+                    #             return Response(response, status_code)
+                    #
+                    #     else:
+                    #         return Response(response, status_code)
+                    #
+                    # else:
+                    #     return Response(response, status_code)
+
                 else:
                     logger.warn(f'serializers throws error : {serializer.errors}')
                     raise Exception
-
-                # print(request.FILES['image'], type(request.FILES['image']), str(request.FILES['image']))
-                # img = str(request.FILES['image'])
-                # apply_ocr(img)
-                # status_code = status.HTTP_200_OK
-                # response = {
-                #     'status': status_code,
-                #     'success': True,
-                #     'message': 'POST API Working'
-                # }
-                #
-                # return Response(response, status_code)
 
         except Exception as e:
             logger.error(f'[METHOD: POST] [ClassificationView] exception occurred as {e}')

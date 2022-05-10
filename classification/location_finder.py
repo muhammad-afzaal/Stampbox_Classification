@@ -10,20 +10,28 @@ def get_country(param):
 
 
 def check_entity(list_param):
-    lower_list = [ele.lower() for ele in list_param]
-    return max(set(lower_list), key = lower_list.count)
+    try:
+        lower_list = [ele.lower() for ele in list_param]
+        return max(set(lower_list), key=lower_list.count)
+    except Exception as e:
+        print('list param is empty')
+        return None
 
 
-def locate_text(param, flag=False):
+def locate_text(param, flag=False, tag_line=None, year=None):
     place_entity = locationtagger.find_locations(text=param)
     data = dict()
+    data['tag_line'] = tag_line
+    data['year'] = year
     # getting all countries
     print("The countries in text : ")
     print(place_entity.countries)
     if place_entity.countries:
         data['Country'] = check_entity(place_entity.countries)
-        if flag==True:
-            return data['Country']
+        if flag == True:
+            data['City'] = check_entity(place_entity.cities)
+            data['Region'] = check_entity(place_entity.regions)
+            return data
 
     # getting all states
     print("The states in text : ")

@@ -3,3 +3,4 @@
 /classification/migrations/
 /stampbox/environment.py
 /db.sqlite3
+/server_test.py
