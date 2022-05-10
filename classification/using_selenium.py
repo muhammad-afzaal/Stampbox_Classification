@@ -1,6 +1,8 @@
 import re
 import time
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import InvalidCookieDomainException
 from webdriver_manager.chrome import ChromeDriverManager
 import pickle
@@ -54,10 +56,16 @@ def use_sel_model(img_param):
 
         # img_param = r'C:/Users/pixarsart/StampBox Classification/stampbox' + img_param
         # driver.add_cookie({'domain': '.google.com', 'expiry': 1653048163, 'httpOnly': False, 'name': '1P_JAR', 'path': '/', 'sameSite': 'None', 'secure': True, 'value': '2022-04-20-12'})
+        # try:
+        #     driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Search by image"]').click()
+        # except Exception as e:
+        #     driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Bildersuche"]').click()
         try:
-            driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Search by image"]').click()
+            # driver.find_element(By.CSS_SELECTOR, '[jsaction="h5M12e;rcuQ6b:npT2md"]').click()
+            driver.execute_script("arguments[0].click();", WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Search by image"]'))))
+            # WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'div[aria-label="Search by image"]'))).click()
         except Exception as e:
-            driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Bildersuche"]').click()
+            driver.find_element(By.XPATH, '//*[@id="sbtc"]/div/div[3]/div[2]').click()
         # driver.find_element(By.CSS_SELECTOR, 'a[href="about:invalid#zClosurez"]').click()
         try:
             driver.find_element(By.CSS_SELECTOR, '#awyMjb').send_keys(img_param)
