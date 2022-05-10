@@ -39,7 +39,7 @@ def use_sel_model(img_param):
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
-        chrome_options.headless = False
+        chrome_options.headless = True
 
         # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
         driver = webdriver.Chrome(options=chrome_options, service=s)
